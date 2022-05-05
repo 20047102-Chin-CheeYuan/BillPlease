@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     Button reset;
     EditText discount;
     RadioGroup rdgMethod;
-    TextView error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,47 +38,48 @@ public class MainActivity extends AppCompatActivity {
         reset = findViewById(R.id.btnReset);
         discount = findViewById(R.id.editInputDiscount);
         rdgMethod = findViewById(R.id.rdgMethod);
-        error = findViewById(R.id.textError);
 
-        calculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (amount.getText().toString().trim().length() != 0 && numPax.getText().toString().trim().length() != 0) {
-                    double newAmt = 0.0;
-                    if (!svs.isChecked() && !gst.isChecked()) {
-                        newAmt = Double.parseDouble(amount.getText().toString());
-                    } else if (svs.isChecked() && !gst.isChecked()) {
-                        newAmt = Double.parseDouble(amount.getText().toString()) * 1.1;
-                    } else if (!svs.isChecked() && gst.isChecked()) {
-                        newAmt = Double.parseDouble(amount.getText().toString()) * 1.07;
-                    } else {
-                        newAmt = Double.parseDouble(amount.getText().toString()) * 1.17;
-                    }
-
-                    //Discount
-                    if (discount.getText().toString().trim().length() != 0) {
-                        newAmt *= 1 - Double.parseDouble(discount.getText().toString()) / 100;
-                    }
-                    totalBill.setText("Total Bill: $" + String.format("%.2f", newAmt));
-                    int numPerson = Integer.parseInt(numPax.getText().toString());
-                    if (numPerson != 1)
-                        eachPays.setText("Each Pays: $" + String.format("%.2f", newAmt / numPerson));
-                    else
-                        eachPays.setText("Each Pays: $" + newAmt);
-
-                    //Paynow
-                    int checkedRadioId = rdgMethod.getCheckedRadioButtonId();
-                    if (checkedRadioId == R.id.radioButtonCash) {
-                        // Write the code when male selected
-                        eachPays.setText("Each Pays: $" + String.format("%.2f", newAmt / numPerson) + " in cash");
-                    } else {
-                        // Write the code when female selected
-                        eachPays.setText("Each Pays: $" + String.format("%.2f", newAmt / numPerson) + " via PayNow to 90302321");
-                    }
-                    
+        calculate.setOnClickListener(v -> {
+            if (amount.getText().toString().trim().length() != 0 && numPax.getText().toString().trim().length() != 0) {
+                double newAmt = 0.0;
+                if (!svs.isChecked() && !gst.isChecked()) {
+                    newAmt = Double.parseDouble(amount.getText().toString());
+                } else if (svs.isChecked() && !gst.isChecked()) {
+                    newAmt = Double.parseDouble(amount.getText().toString()) * 1.1;
+                } else if (!svs.isChecked() && gst.isChecked()) {
+                    newAmt = Double.parseDouble(amount.getText().toString()) * 1.07;
+                } else {
+                    newAmt = Double.parseDouble(amount.getText().toString()) * 1.17;
 
                 }
+
+                //Discount
+                if (discount.getText().toString().trim().length() != 0) {
+                    newAmt *= 1 - Double.parseDouble(discount.getText().toString()) / 100;
+                }
+                totalBill.setText("Total Bill: $" + String.format("%.2f", newAmt));
+                int numPerson = Integer.parseInt(numPax.getText().toString());
+                if (numPerson != 1)
+                    eachPays.setText("Each Pays: $" + String.format("%.2f", newAmt / numPerson));
+                else
+                    eachPays.setText("Each Pays: $" + newAmt);
+
+                //Paynow
+                int checkedRadioId = rdgMethod.getCheckedRadioButtonId();
+                if (checkedRadioId == R.id.radioButtonCash) {
+                    // Write the code when male selected
+                    eachPays.setText("Each Pays: $" + String.format("%.2f", newAmt / numPerson) + " in cash");
+                } else {
+                    // Write the code when female selected
+                    eachPays.setText("Each Pays: $" + String.format("%.2f", newAmt / numPerson) + " via PayNow to 90302321");
+                }
             }
+
+            //Error Validation
+            if (amount.getText().toString().trim().length() == 0) {
+                amount.setError("Please enter the total Amount!");
+            } else if (numPax.getText().toString().trim().length() == 0)
+                numPax.setError("Please enter the number of people paying!");
         });
 
         reset.setOnClickListener(new View.OnClickListener() {

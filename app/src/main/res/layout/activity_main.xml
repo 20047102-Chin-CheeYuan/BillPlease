@@ -16,12 +16,11 @@
         android:id="@+id/editInputAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="1234567890"
+        android:autofillHints=""
         android:hint="@string/editAmount"
-        android:inputType="phone"
+        android:inputType="number"
         android:minHeight="48dp"
-        android:textColorHint="#757575"
-        android:autofillHints="" />
+        android:textColorHint="#757575" />
 
     <TextView
         android:id="@+id/textNumPax"
@@ -73,9 +72,8 @@
         android:id="@+id/editInputDiscount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="1234567890"
         android:hint="@string/editDiscount"
-        android:inputType="phone"
+        android:inputType="number"
         android:minHeight="48dp"
         android:textColorHint="#757575" />
 
@@ -122,14 +120,6 @@
             android:layout_height="wrap_content"
             android:text="@string/textEachPays"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <TextView
-            android:id="@+id/textError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#FF0000" />
 
         <Button
             android:id="@+id/btnReset"
